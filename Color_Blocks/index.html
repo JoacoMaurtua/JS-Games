@@ -1,0 +1,149 @@
+<html>
+<head>
+	<title>Recursive Fill</title>
+
+	<style>
+	* {
+		margin:0px;
+		padding:0px;
+	}
+	body{
+		background-color:black;
+	}
+	.row div{
+		width:50px;
+		height:50px;
+		display:inline-block;
+	}
+  /*
+    <div class = "container">
+        <div class = "row">
+            <div class = "red"></div>
+            <div class = "red"></div>
+            <div class = "red"></div>
+            <div class = "white"></div>
+            <div class = "white"></div>
+            <div class = "white"></div>
+            <div class = "white"></div>
+            <div class = "blue"></div>
+            <div class = "yellow"></div>
+            <div class = "yellow"></div>
+        </div>
+
+        <div class = "row">
+            <div class = "white"></div>
+            <div class = "red"></div>
+            <div class = "yellow"></div>
+            <div class = "blue"></div>
+            <div class = "green"></div>
+            .
+            .
+            .
+        </div>
+        .
+        .
+        .
+    </div>
+  */
+    .white{
+      background-color:white;
+    }
+    .red{
+      background-color:red;
+    }
+    .yellow{
+      background-color:yellow;
+    }
+    .blue{
+      background-color:blue;
+    }
+    .green{
+      background-color:green;
+    }
+
+  
+	</style>
+</head>
+<body>
+
+	<div id='container'></div>
+
+	<script>
+		var world = [               //array de arrays
+			[1,1,1,0,0,0,0,3,2,2],
+			[0,0,0,0,1,0,0,3,3,3],
+			[0,2,2,0,1,0,0,0,0,0],
+			[0,2,2,0,1,1,1,1,0,0],
+			[0,2,2,0,1,0,0,0,0,3],
+			[0,2,2,0,1,0,0,3,3,3],
+			[0,0,0,0,1,0,0,3,3,3]
+		];
+
+		var mapping = { //objeto
+			0: 'white',
+			1: 'red',
+			2: 'yellow',
+			3: 'blue',
+			4: 'green'
+		}
+
+    //var blanco = mapping.0;
+    //mapping[blanco]
+    //mapping['1']
+
+		function drawWorld() //Dibuja todo el tablero
+		{
+			var output = '';
+			for(var i=0; i<world.length; i++) //7
+			{
+				output = output + '<div class="row">'; //agrega 7 rows
+				for(var j=0; j<world[i].length; j++) //dentro de cada row agrega 10 class = "color"
+				{
+					output += "<div class = '"+mapping[world[i][j]]+"'></div>"; 
+				}
+				output += '</div>';
+			}
+			document.getElementById('container').innerHTML = output; //los 7 rows, con 10 class = "color" dentro de cada uno, son incluidos dentro de container
+			// console.log(output);
+		}
+
+		document.onclick = function(e)
+		{
+			// console.log('Coordinate Clicked', e.x, e.y);
+
+			var x = Math.floor(e.x/50);
+			var y = Math.floor(e.y/50);
+
+			// console.log('X, Y', x, y);
+			// console.log('Original Color', world[y][x]);
+
+			console.log('Replace color', world[y][x], ' with color 4 starting from x:', x, 'y:', y);
+			fill(x, y, world[y][x], 4);
+		}
+
+		function fill(x,y,original_color, color)
+		{
+
+			//your recursion codes here
+			if (y<0 || y>=world.length || x<0 || x >=10){
+				return false;
+			}
+			if(world[y][x] != original_color){
+				return false;
+			}
+			world[y][x] = color;
+			
+			// your recursion codes here
+			fill(x, y+1,original_color, color);
+			fill(x, y-1,original_color, color);
+			fill(x+1, y, original_color, color)
+			fill(x-1, y, original_color, color)
+			drawWorld();
+			
+		}
+
+		drawWorld();
+
+	</script>
+
+</body>
