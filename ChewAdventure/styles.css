@@ -8,3 +8,12 @@
   left: 50%;
   transform: translate(-50%,-50%); /*para centrar un objeto*/
 }
+
+h1{
+  display: inline-block;
+  margin: 36px 150px 0 150px;
+  text-align: center;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color: #b37e39;
+
+}
